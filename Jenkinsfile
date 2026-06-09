@@ -11,6 +11,17 @@ pipeline {
                 }
             }
         }
+
+        stage('Trivy Scan') {
+            steps {
+                sh '''
+                trivy image \
+                --severity HIGH,CRITICAL \
+                --exit-code 1 \
+                saikiran2233/productcatalogservice:latest
+                '''
+            }
+        }
         
         stage('Push Docker Image') {
             steps {
